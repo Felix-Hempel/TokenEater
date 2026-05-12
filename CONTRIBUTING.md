@@ -1,76 +1,68 @@
 # Contributing to TokenEater
 
-Hey! Thanks for considering a contribution. TokenEater started as a solo side project and I'm happy to see other people wanting to help. This document tells you how to do that without us stepping on each other's toes.
+Thanks for thinking about contributing! Whether it's a bug report, a feature idea, or a code PR, all of it helps. TokenEater is a side project, so this guide is more "here's how things tend to work" than a strict ruleset.
 
-## Quick rules
+A couple of small things to know:
 
-- All issues, PRs, commits, branches and comments must be in **English**.
-- Open an issue **before** writing code for a non-trivial change. Saves you from coding something I'd reject.
-- If you're not sure whether something belongs in TokenEater, ask first. I'd rather say "great idea" than "sorry, scope creep".
+- Everything on GitHub (issues, PRs, commits, branches) should be in English.
+- For bigger features, opening an issue first is usually a good idea so we can sanity-check the scope before you spend time on it. For small fixes or obvious bugs, just go ahead.
 
 ## Reporting bugs
 
-Use the **Bug report** issue template (it'll guide you). The more info you give me up front, the faster I can fix it. The non-negotiable infos:
+Use the **Bug report** template - it'll walk you through it. The more info you give, the easier the bug is to track down. The most useful things to include:
 
 - macOS version
-- TokenEater version (see *Settings -> About* or the menu bar tooltip)
-- Steps to reproduce (1, 2, 3 - clear and minimal)
-- What you expected vs. what happened
-- A screenshot or screen recording if it's UI-related
-- Console logs if you have them (`Console.app`, filter by `TokenEater`)
+- TokenEater version (in *Settings -> About* or the menu bar tooltip)
+- Repro steps if you have them
+- A screenshot or recording for anything visual
+- Console logs from `Console.app` (filter by `TokenEater`) for anything mysterious
 
-If you can't reproduce reliably, say so. "Happens sometimes" is fine, just say it.
+If you can't reproduce reliably, that's fine - just say so.
 
 ## Suggesting features
 
-Use the **Feature request** issue template. Tell me:
-
-- What you want to do (the user story, not the implementation)
-- Why current behavior doesn't cover it
-- What you've tried as a workaround
-
-Don't start coding a feature without an issue first - I have a pretty strong opinion on TokenEater's scope and I'd hate for you to waste a weekend on something I won't merge.
+Use the **Feature request** template. Mostly I want to understand the *problem* you're trying to solve, more than a specific implementation. If you also have an idea for how you'd build it, great, but it's optional.
 
 ## Contributing code
 
-### 1. Prerequisites
+### Setup
 
-Setup is in [`SETUP.md`](SETUP.md). TL;DR:
+See [`SETUP.md`](SETUP.md). TL;DR: macOS 14+, Xcode 16.4 (specifically - newer versions can surface Swift 6.1 bugs that don't repro locally, see [`CLAUDE.md`](CLAUDE.md) for details), and `brew install xcodegen`.
 
-- macOS 14+
-- Xcode 16.4 (exactly - newer versions can surface Swift 6.1 bugs that don't repro locally, see [`CLAUDE.md`](CLAUDE.md) for the gory details)
-- `brew install xcodegen`
+### Workflow
 
-### 2. Fork and branch
+1. Fork the repo and clone your fork.
+2. Create a branch off `main`. Branch names are flexible - something like `feat/short-description` or `fix/short-description` works great.
+3. Code.
+4. Run the tests (see below), and try a manual build if you touched anything visual.
+5. Open a PR.
 
-1. Fork the repo on GitHub.
-2. Clone your fork locally.
-3. Create a branch off `main` with a descriptive name:
+If you're not sure about something, don't stress - I'd rather give feedback in a PR than have you spend an hour worrying about getting things perfect.
+
+### A few things worth knowing about the code
+
+- Architecture is MV + Repository pattern with `ObservableObject` + `@Published`. There's a quick map in [`README.md`](README.md).
+- There are a few hard-earned SwiftUI rules - the big ones:
+  - **Don't use `@Observable`** (Swift Observation framework). The whole codebase uses `ObservableObject` + `@Published`. There's a Release-only freeze bug under Swift 6.1.x that's invisible in Debug.
+  - **No `@StateObject` in the `App` struct** - use `private let store = Store()`.
+  - **No bindings to computed properties** or `Binding(get:set:)` - they cause infinite loops.
+  - Full list and reasoning in [`CLAUDE.md`](CLAUDE.md).
+
+### Commits
+
+[Conventional Commits](https://www.conventionalcommits.org/) format is preferred (`feat:`, `fix:`, `chore:`, `docs:`, etc.) - it makes generating changelogs easier later. Don't sweat it too much though, if you mess up a commit message I can fix it on merge.
+
+Examples:
 
 ```
-feat/agent-watchers-keyboard-shortcut
-fix/popover-refresh-button-not-visible
-chore/bump-sparkle-version
-docs/clarify-keychain-prompt
+feat: add keyboard shortcut to toggle agent watchers
+fix: refresh slider hidden under popover edge
+chore: bump Sparkle to 2.6.4
 ```
 
-Prefix conventions: `feat/`, `fix/`, `chore/`, `docs/`, `refactor/`, `test/`. Kebab-case after the prefix.
+### Tests
 
-### 3. Code it
-
-A few things worth knowing before you touch the code:
-
-- **Architecture**: MV pattern + Repository pattern + protocol-oriented services. No singletons, dependencies are injected. Stores are `ObservableObject` + `@Published`, passed via `@EnvironmentObject`. See the *Architecture* section in [`README.md`](README.md) for the layout.
-- **SwiftUI rules**: There are a few hard rules that have caused real production bugs - the most important ones:
-  - **Do not use `@Observable`** (Swift 5.9 Observation framework). The whole codebase uses `ObservableObject` + `@Published`. There's a Release-only freeze bug under Swift 6.1.x that's invisible in Debug. Just don't.
-  - **Do not put `@StateObject` in the `App` struct.** Use `private let store = Store()`.
-  - **Do not create bindings to computed properties** or use `Binding(get:set:)`. They cause infinite re-evaluation loops.
-  - Full list and rationale in [`CLAUDE.md`](CLAUDE.md) -> *SwiftUI rules section*. Read it once before submitting a PR that touches views.
-- **Sandbox**: the widget extension is sandboxed (WidgetKit requires it). The main app is not. Anything that hits Keychain or the network must live in the main app, not the widget.
-
-### 4. Test it
-
-Run the unit tests (80+ tests covering stores, repository, pacing, token recovery):
+For changes in `Shared/` (stores, services, helpers), please run the unit tests:
 
 ```bash
 xcodegen generate
@@ -81,62 +73,13 @@ xcodebuild -project TokenEater.xcodeproj -scheme TokenEaterTests \
   test
 ```
 
-**When to add tests**: anything you touch in `Shared/` (stores, services, repository, helpers, models). Tests use Swift Testing (`import Testing`, `@Test`, `#expect`). Mocks live in `TokenEaterTests/Mocks/`.
+For SwiftUI or widget changes, manual testing matters more - build a Release version and try it. The *Build + Nuke + Install* one-liner in [`CLAUDE.md`](CLAUDE.md) is what I use locally.
 
-**When to test manually**: SwiftUI changes, widget rendering, anything visual. Build a Release version and install it locally - the *Build + Nuke + Install* one-liner in [`CLAUDE.md`](CLAUDE.md) does exactly that. Widget changes especially need a manual install because macOS aggressively caches widget extensions.
+CI runs the tests automatically on PRs, so you'll see if anything broke.
 
-### 5. Commit
+## Questions
 
-We use **[Conventional Commits](https://www.conventionalcommits.org/)**. Format:
+- General questions or ideas in progress: [GitHub Discussions](https://github.com/AThevon/TokenEater/discussions)
+- Security issues: please email me directly at [adrien.thevon@pictarine.com](mailto:adrien.thevon@pictarine.com) rather than opening a public issue.
 
-```
-<type>: <short imperative description>
-
-<optional longer body explaining why>
-```
-
-Types: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `perf`, `style`, `ci`.
-
-Examples of good commits:
-
-```
-feat: add keyboard shortcut to toggle agent watchers
-fix: refresh slider hidden under popover edge on macOS 14
-chore: bump Sparkle to 2.6.4
-docs: clarify keychain prompt behavior on first launch
-```
-
-Keep commits focused. A PR with one logical commit is great. A PR with 12 "wip" commits is not - squash before requesting review, or I'll squash on merge.
-
-### 6. Open a PR
-
-Push your branch to your fork, then open a PR against `main`. The PR template will ask you a few things - fill it in.
-
-**PR checklist** (before requesting review):
-
-- [ ] Branch is up to date with `main` (`git fetch origin && git rebase origin/main`)
-- [ ] Code builds cleanly in Release with Xcode 16.4
-- [ ] Unit tests pass locally
-- [ ] If you changed SwiftUI: tested manually in Release (not just Debug - some bugs only appear in Release)
-- [ ] If you changed the widget: tested manually after a full cache nuke (see `CLAUDE.md`)
-- [ ] No new compiler warnings
-- [ ] Commit messages follow Conventional Commits
-
-CI will run the build and tests on your PR. Wait for it to go green before pinging me.
-
-## Code style
-
-There's no `swiftlint` config (yet), so just match the surrounding code. A few high-signal things:
-
-- 4-space indentation, no tabs
-- Trailing commas in multi-line collections where Swift allows them
-- `// MARK: - Section` to organize long files
-- Prefer `private` and `let` by default
-- Don't write doc comments for trivial things, but do explain non-obvious *why* in comments
-
-## Questions, help, ideas
-
-- **General questions**: open a GitHub Discussion or an issue with the `question` label.
-- **Found a security issue?** Don't open a public issue - email me directly at [adrien.thevon@pictarine.com](mailto:adrien.thevon@pictarine.com).
-
-Thanks again for contributing. Even just opening a well-written bug report helps a lot.
+That's it. Thanks for being here.

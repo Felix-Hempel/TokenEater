@@ -6,15 +6,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to report a bug! Please fill in as much as you can - the more info you give, the faster I can fix it.
-
-        Before submitting, please check that no existing issue covers your bug: https://github.com/AThevon/TokenEater/issues?q=is%3Aissue
+        Thanks for taking the time to report a bug! Fill in what you can - more info makes things easier to track down, but don't worry if some fields don't apply.
 
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
-      description: A clear, concise description of the bug.
+      description: A short description of the bug.
       placeholder: When I click X, the widget shows Y instead of Z.
     validations:
       required: true
@@ -24,20 +22,15 @@ body:
     attributes:
       label: What did you expect to happen?
       placeholder: I expected the widget to refresh and show the new value.
-    validations:
-      required: true
 
   - type: textarea
     id: reproduction
     attributes:
-      label: Steps to reproduce
-      description: Minimal numbered steps so I can reproduce the bug.
+      label: Steps to reproduce (if you have them)
       placeholder: |
         1. Open TokenEater
         2. Click the menu bar icon
         3. ...
-    validations:
-      required: true
 
   - type: input
     id: tokeneater-version
@@ -59,34 +52,29 @@ body:
   - type: dropdown
     id: install-method
     attributes:
-      label: How did you install TokenEater?
+      label: How did you install TokenEater? (optional)
       options:
         - DMG from GitHub Releases
         - Homebrew cask
         - Built from source
-        - Other (specify in additional context)
-    validations:
-      required: true
+        - Other / not sure
 
   - type: dropdown
     id: claude-plan
     attributes:
-      label: Claude plan
+      label: Claude plan (optional)
       options:
         - Pro
         - Max
         - Team
-        - Free (note - TokenEater does not support this)
         - Not sure
-    validations:
-      required: true
 
   - type: textarea
     id: logs
     attributes:
       label: Logs or console output (optional)
       description: |
-        Optional but very helpful. Open `Console.app`, filter by `TokenEater`, reproduce the bug, copy/paste any error lines here.
+        Open `Console.app`, filter by `TokenEater`, reproduce the bug, and paste any relevant error lines here.
       render: shell
 
   - type: textarea
@@ -98,15 +86,13 @@ body:
   - type: textarea
     id: additional
     attributes:
-      label: Additional context
-      description: Anything else you think is relevant - other tools running, multiple Claude accounts, etc.
+      label: Anything else? (optional)
+      description: Other tools running, multiple Claude accounts, anything that might be relevant.
 
   - type: checkboxes
     id: terms
     attributes:
-      label: Before submitting
+      label: Quick check
       options:
-        - label: I searched existing issues and didn't find a duplicate.
-          required: true
-        - label: I'm on TokenEater 5.0 or later (older versions are no longer supported).
+        - label: I had a quick look for existing issues that might match.
           required: true

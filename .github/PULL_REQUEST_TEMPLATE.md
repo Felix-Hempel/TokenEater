@@ -1,44 +1,33 @@
 <!--
-Thanks for opening a PR! A few things to make review smooth:
-- Link the issue this fixes/closes (e.g. `Closes #123`). If there's no issue and the change is non-trivial, please open one first.
-- Keep the PR focused on a single concern.
-- Fill the checklist before requesting review.
+Thanks for opening a PR!
+If this fixes an issue, link it below (e.g. `Closes #123`).
 -->
 
 ## What this PR does
 
-<!-- One or two sentences describing the change. -->
+<!-- One or two sentences. -->
 
 ## Why
 
-<!-- The motivation. Link the related issue if there is one. -->
+<!-- The motivation. Skip if obvious from the title. -->
 
 Closes #
 
 ## How to test
 
-<!-- Steps a reviewer can follow to verify the change locally. Be specific. -->
+<!-- Steps a reviewer can follow to verify the change. -->
 
 1.
 2.
-3.
 
-## Screenshots / recordings (if UI-related)
+## Screenshots / recordings
 
-<!-- Drag images or videos here, or delete this section. -->
+<!-- For anything UI-related. Delete this section otherwise. -->
 
 ## Checklist
 
+- [ ] Tests pass locally
+- [ ] If you changed SwiftUI or the widget, you tested it manually in a Release build
 - [ ] Branch is rebased on the latest `main`
-- [ ] Code builds cleanly in Release with Xcode 16.4
-- [ ] Unit tests pass locally (`xcodebuild ... -scheme TokenEaterTests test`)
-- [ ] If SwiftUI was touched: tested manually in Release (not just Debug)
-- [ ] If widget was touched: tested manually after a full cache nuke
-- [ ] Followed the SwiftUI rules in `CLAUDE.md` (no `@Observable`, no `@StateObject` in App struct, no bindings to computed properties, etc.)
-- [ ] Commits follow Conventional Commits (`feat:`, `fix:`, `chore:`, etc.)
-- [ ] No new compiler warnings
-- [ ] Updated docs (`README.md`, `SETUP.md`, `CLAUDE.md`) if behavior or setup changed
 
-## Additional notes for reviewer
-
-<!-- Anything else worth flagging - tradeoffs, follow-up work, things you'd like specific feedback on. Delete if not needed. -->
+<!-- Anything else worth flagging - tradeoffs, follow-up work, things you'd like feedback on. -->
