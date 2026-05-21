@@ -157,9 +157,10 @@
 "error.banner.reauth" = "Autorisation requise";
 "error.banner.reauth.hint" = "Token expiré et la récupération automatique a échoué";
 "error.banner.reauth.button" = "Ré-autoriser";
-"error.banner.apiunavailable" = "API usage indisponible";
-"error.banner.apiunavailable.hint" = "Votre token OAuth Claude Code a atteint sa limite de requêtes API. Nouvel essai dans ~6h - ou lancez \"claude /login\" dans Claude Code pour un nouveau token.";
-"error.banner.apiunavailable.settings" = "API usage rate limitee - nouvel essai dans ~6h, ou lancez \"claude /login\" dans Claude Code pour un nouveau token";
+"error.banner.apiunavailable" = "API throttle par Anthropic";
+"error.banner.apiunavailable.hint" = "Bug connu sur l'endpoint /api/oauth/usage (anthropics/claude-code#31637). Nouvel essai auto avec backoff exponentiel (30 min → 6 h).";
+"error.banner.apiunavailable.settings" = "API throttle par Anthropic (anthropics/claude-code#31637). Nouvel essai auto.";
+"error.banner.apiunavailable.learnmore" = "En savoir plus";
 "error.banner.retry.button" = "Réessayer";
 "error.banner.diagnostic.button" = "Copier diagnostic";
 "error.banner.diagnostic.copied" = "Copié";
@@ -405,6 +406,10 @@
 /* Smart Color (toggle global dans Themes) */
 "settings.smartcolor.title" = "Smart Color";
 "settings.smartcolor.hint" = "Les couleurs s'adaptent au temps restant avant reset, pas juste au pourcentage absolu.";
+"settings.glow.title" = "Effet néon";
+"settings.glow.hint" = "Halo autour des jauges et métriques dans le popover et le monitoring. Désactive pour un look plus plat et clean.";
+"settings.glow.mode.glow" = "Glow";
+"settings.glow.mode.flat" = "Flat";
 "settings.smartcolor.popover.title" = "Comment fonctionne Smart Color";
 "settings.smartcolor.popover.intro" = "Smart Color intègre le temps qu'il te reste avant le prochain reset. Même pourcentage, couleur différente selon la proximité du reset.";
 "settings.smartcolor.popover.example1.label" = "Risque faible";
