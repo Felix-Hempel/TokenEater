@@ -54,15 +54,21 @@ final class MonitoringInsightsStore: ObservableObject {
                 let previous = (try? await previousTask) ?? 0
                 if Task.isCancelled { return }
                 await MainActor.run {
-                    self.weeklyBuckets = buckets
+                    let now = Date()
+                    // Trim the rolling-window result to the 7 calendar days the
+                    // widget renders so the in-app weekly total matches the
+                    // widget total (loadHistory can surface a partial 8th day).
+                    let windowed = Self.bucketsInWindow(buckets, today: now)
+                    self.weeklyBuckets = windowed
                     self.previousWeekTotal = previous
                     self.hasLoaded = true
-                    self.lastLoaded = Date()
+                    self.lastLoaded = now
                     // Mirror the daily totals to the shared file so the
                     // History Sparkline widget renders without re-parsing
-                    // JSONL from the sandboxed widget process.
-                    let totals = buckets.map { $0.totalActive }
-                    self.sharedFile.updateLastWeekDailyTotals(totals, refreshedAt: Date())
+                    // JSONL from the sandboxed widget process. Densify to one
+                    // slot per calendar day so empty days stay aligned (#179).
+                    let totals = Self.dailyTotalsByDay(from: windowed, today: now)
+                    self.sharedFile.updateLastWeekDailyTotals(totals, refreshedAt: now)
                 }
             } catch {
                 // Silent fail - back-of-card content just stays minimal.
@@ -102,6 +108,55 @@ final class MonitoringInsightsStore: ObservableObject {
             heaviestDay: heaviest,
             deltaPercent: deltaPercent
         )
+    }
+
+    /// Maps sparse daily buckets onto a dense, calendar-aligned array of
+    /// `days` slots (oldest first, today last), zero-filling days with no
+    /// activity. The History Sparkline widget labels each bar by its position
+    /// relative to today, so a missing day must be an explicit zero rather
+    /// than skipped - otherwise every later bar shifts under the wrong weekday
+    /// (issue #179). Returns `[]` when there is no history at all so the widget
+    /// keeps showing its empty state.
+    /// The buckets whose calendar day falls within the last `days` days ending
+    /// today (inclusive). `loadHistory` uses a rolling instant window that can
+    /// surface a partial 8th day; trimming here keeps the in-app weekly total
+    /// aligned with the 7 calendar days the widget renders (#179).
+    nonisolated static func bucketsInWindow(
+        _ buckets: [HistoryBucket],
+        days: Int = 7,
+        today: Date,
+        calendar: Calendar = .current
+    ) -> [HistoryBucket] {
+        let startToday = calendar.startOfDay(for: today)
+        guard let windowStart = calendar.date(byAdding: .day, value: -(days - 1), to: startToday) else {
+            return buckets
+        }
+        return buckets.filter {
+            let day = calendar.startOfDay(for: $0.date)
+            return day >= windowStart && day <= startToday
+        }
+    }
+
+    nonisolated static func dailyTotalsByDay(
+        from buckets: [HistoryBucket],
+        days: Int = 7,
+        today: Date,
+        calendar: Calendar = .current
+    ) -> [Int] {
+        guard !buckets.isEmpty else { return [] }
+        let totalsByDay = Dictionary(
+            buckets.map { (calendar.startOfDay(for: $0.date), $0.totalActive) },
+            uniquingKeysWith: +
+        )
+        let startToday = calendar.startOfDay(for: today)
+        let dense = (0..<days).reversed().map { offset -> Int in
+            let day = calendar.date(byAdding: .day, value: -offset, to: startToday) ?? startToday
+            return totalsByDay[day] ?? 0
+        }
+        // All-zero means the surviving activity all fell on the dropped partial
+        // day outside the window - return empty so the widget shows its empty
+        // state instead of a flat 0-chart (#179 review finding).
+        return dense.allSatisfy { $0 == 0 } ? [] : dense
     }
 
     private func tokensFor(_ family: ModelFamily?, in bucket: HistoryBucket) -> Int {
