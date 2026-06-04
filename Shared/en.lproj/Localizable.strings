@@ -216,10 +216,14 @@
 "notif.title.token" = "Token's stale";
 "notif.body.token" = "Reconnect to keep tracking";
 
-"notif.title.pacing.hot" = "Burning hot";
-"notif.body.pacing.hot" = "Way ahead of pace, pump the brakes";
-"notif.title.pacing.warning" = "Drifting fast";
-"notif.body.pacing.warning" = "A touch faster than ideal, keep an eye";
+"notif.title.pacing.hot.weekly" = "Week running hot";
+"notif.body.pacing.hot.weekly" = "You're well ahead of an even weekly pace, fine if intentional, otherwise worth easing off";
+"notif.title.pacing.warning.weekly" = "Week picking up";
+"notif.body.pacing.warning.weekly" = "A little ahead of an even weekly pace, just a heads up";
+"notif.title.pacing.hot.fivehour" = "Session running hot";
+"notif.body.pacing.hot.fivehour" = "You're well ahead of an even pace for this 5h session, fine if intentional, otherwise ease off";
+"notif.title.pacing.warning.fivehour" = "Session picking up";
+"notif.body.pacing.warning.fivehour" = "A little ahead of an even pace for this 5h session, just a heads up";
 
 "notif.title.reminder.session" = "Session resets in %@";
 "notif.body.reminder.session" = "Save your spot or send it";

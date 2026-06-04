@@ -221,21 +221,34 @@ final class NotificationService: NotificationServiceProtocol {
         switch zone {
         case .hot:
             guard toggles.pacingHot else { return }
-            firePacing(zone: .hot)
+            firePacing(zone: .hot, surface: surface)
         case .warning:
             guard toggles.pacingWarning else { return }
-            firePacing(zone: .warning)
+            firePacing(zone: .warning, surface: surface)
         case .chill, .onTrack:
             return
         }
     }
 
-    private func firePacing(zone: PacingZone) {
+    /// Builds the localization keys + dedupe id for a pacing alert. `window` is
+    /// the surface's `bodyFamily` ("weekly" / "fivehour") so the weekly and 5h
+    /// session pace alerts read distinctly, name their window, and don't dedupe
+    /// against each other.
+    static func pacingNotificationKeys(zone: PacingZone, window: String) -> (title: String, body: String, id: String) {
+        (
+            title: "notif.title.pacing.\(zone.rawValue).\(window)",
+            body: "notif.body.pacing.\(zone.rawValue).\(window)",
+            id: "pacing_\(window)_\(zone.rawValue)"
+        )
+    }
+
+    private func firePacing(zone: PacingZone, surface: Surface) {
+        let keys = Self.pacingNotificationKeys(zone: zone, window: surface.bodyFamily)
         let content = UNMutableNotificationContent()
         content.sound = .default
-        content.title = NSLocalizedString("notif.title.pacing.\(zone.rawValue)", comment: "")
-        content.body = NSLocalizedString("notif.body.pacing.\(zone.rawValue)", comment: "")
-        send(id: "pacing_\(zone.rawValue)", content: content)
+        content.title = NSLocalizedString(keys.title, comment: "")
+        content.body = NSLocalizedString(keys.body, comment: "")
+        send(id: keys.id, content: content)
     }
 
     // MARK: - Extra credits

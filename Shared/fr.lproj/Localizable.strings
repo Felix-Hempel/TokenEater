@@ -216,10 +216,14 @@
 "notif.title.token" = "Token périmé";
 "notif.body.token" = "Reconnecte pour reprendre le suivi";
 
-"notif.title.pacing.hot" = "Surchauffe";
-"notif.body.pacing.hot" = "Largement en avance, lève le pied";
-"notif.title.pacing.warning" = "Ça dérive";
-"notif.body.pacing.warning" = "Un poil rapide, garde l'œil";
+"notif.title.pacing.hot.weekly" = "Semaine qui chauffe";
+"notif.body.pacing.hot.weekly" = "Tu es bien au-dessus d'un rythme hebdo régulier, rien d'alarmant si c'est voulu, sinon lève un peu le pied";
+"notif.title.pacing.warning.weekly" = "Semaine qui accélère";
+"notif.body.pacing.warning.weekly" = "Un peu au-dessus d'un rythme hebdo régulier, juste pour info";
+"notif.title.pacing.hot.fivehour" = "Session qui chauffe";
+"notif.body.pacing.hot.fivehour" = "Tu es bien au-dessus d'un rythme régulier pour cette fenêtre 5h, lève un peu le pied pour la faire durer";
+"notif.title.pacing.warning.fivehour" = "Session qui accélère";
+"notif.body.pacing.warning.fivehour" = "Un peu au-dessus d'un rythme régulier pour cette fenêtre 5h, juste pour info";
 
 "notif.title.reminder.session" = "Reset session dans %@";
 "notif.body.reminder.session" = "Sauve ton truc ou envoie";
