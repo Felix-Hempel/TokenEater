@@ -24,7 +24,7 @@ struct SettingsSectionView: View {
                     cardLabel(String(localized: "settings.tab.connection"))
                     HStack(spacing: 8) {
                         Circle()
-                            .fill(usageStore.hasConfig && !usageStore.isDisconnected ? Color.green : Color.red)
+                            .fill(usageStore.hasConfig && !usageStore.isDisconnected ? Color(hex: "#D97706") : Color.red)
                             .frame(width: 8, height: 8)
                         Text(usageStore.hasConfig && !usageStore.isDisconnected
                              ? String(localized: "settings.connected")
@@ -45,7 +45,7 @@ struct SettingsSectionView: View {
                     if let message = importMessage {
                         Text(message)
                             .font(.system(size: 11))
-                            .foregroundStyle(importSuccess ? .green : .orange)
+                            .foregroundStyle(importSuccess ? Color(hex: "#D97706") : .orange)
                     }
                     if usageStore.errorState == .rateLimited {
                         Label {
@@ -60,7 +60,7 @@ struct SettingsSectionView: View {
                     if let result = testResult {
                         Text(result.message)
                             .font(.system(size: 11))
-                            .foregroundStyle(result.success ? .green : .red)
+                            .foregroundStyle(result.success ? Color(hex: "#D97706") : .red)
                     }
                 }
             }
@@ -140,7 +140,7 @@ struct SettingsSectionView: View {
                         case .authorized:
                             Label(String(localized: "settings.notifications.on"), systemImage: "checkmark.circle.fill")
                                 .font(.system(size: 12))
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color(hex: "#D97706"))
                         case .denied:
                             Label(String(localized: "settings.notifications.off"), systemImage: "xmark.circle.fill")
                                 .font(.system(size: 12))
@@ -194,7 +194,7 @@ struct SettingsSectionView: View {
                         } else if case .upToDate = updateStore.updateState {
                             Label(String(localized: "update.uptodate"), systemImage: "checkmark.circle.fill")
                                 .font(.system(size: 11))
-                                .foregroundStyle(.green)
+                                .foregroundStyle(Color(hex: "#D97706"))
                         } else if let version = updateStore.updateState.availableVersion {
                             Button(String(localized: "update.available.badge \(version)")) {
                                 updateStore.downloadUpdate()
@@ -257,7 +257,7 @@ struct SettingsSectionView: View {
             HStack(alignment: .top, spacing: 8) {
                 Image(systemName: "lock.shield")
                     .font(.system(size: 12))
-                    .foregroundStyle(.green.opacity(0.8))
+                    .foregroundStyle(Color(hex: "#D97706").opacity(0.8))
                     .padding(.top, 1)
                 Text(String(localized: "credentials.helper.trust"))
                     .font(.system(size: 11))
@@ -281,11 +281,11 @@ struct SettingsSectionView: View {
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Color.green.opacity(0.08))
+        .background(Color(hex: "#D97706").opacity(0.08))
         .clipShape(RoundedRectangle(cornerRadius: 8))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.green.opacity(0.15), lineWidth: 0.5)
+                .stroke(Color(hex: "#D97706").opacity(0.15), lineWidth: 0.5)
         )
     }
 
@@ -311,16 +311,16 @@ struct SettingsSectionView: View {
                         .foregroundStyle(.orange.opacity(0.9))
                         .lineLimit(2)
                 } else {
-                    Circle().fill(Color.green).frame(width: 8, height: 8)
+                    Circle().fill(Color(hex: "#D97706")).frame(width: 8, height: 8)
                     if let lastSync {
                         let relative = lastSync.formatted(.relative(presentation: .named))
                         Text(String(format: String(localized: "credentials.helper.status.active"), relative))
                             .font(.system(size: 12))
-                            .foregroundStyle(.green.opacity(0.9))
+                            .foregroundStyle(Color(hex: "#D97706").opacity(0.9))
                     } else {
                         Text(String(localized: "credentials.helper.status.active.nosync"))
                             .font(.system(size: 12))
-                            .foregroundStyle(.green.opacity(0.9))
+                            .foregroundStyle(Color(hex: "#D97706").opacity(0.9))
                     }
                 }
             case .error(let msg):
@@ -393,7 +393,7 @@ struct SettingsSectionView: View {
                 } label: {
                     Image(systemName: brewCopied ? "checkmark" : "doc.on.doc")
                         .font(.system(size: 10))
-                        .foregroundStyle(brewCopied ? .green : .white.opacity(0.4))
+                        .foregroundStyle(brewCopied ? Color(hex: "#D97706") : .white.opacity(0.4))
                 }
                 .buttonStyle(.plain)
                 Spacer()

@@ -33,7 +33,7 @@ struct PrerequisiteStep: View {
         case .detected:
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
-                .foregroundStyle(.green)
+                .foregroundStyle(Color(hex: "#D97706"))
         case .notFound:
             Image(systemName: "xmark.circle.fill")
                 .font(.system(size: 48))

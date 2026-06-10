@@ -149,7 +149,7 @@ struct AgentWatchersSectionView: View {
 
                     if settingsStore.watchersDetailedMode {
                         statusRow(
-                            color: Color(red: 0.3, green: 0.78, blue: 0.52),
+                            color: Color(red: 0.85, green: 0.47, blue: 0.02),
                             label: String(localized: "settings.watchers.idle")
                         )
                         statusRow(
@@ -174,7 +174,7 @@ struct AgentWatchersSectionView: View {
                         )
                     } else {
                         statusRow(
-                            color: Color(red: 0.3, green: 0.78, blue: 0.52),
+                            color: Color(red: 0.85, green: 0.47, blue: 0.02),
                             label: String(localized: "settings.watchers.simple.idle")
                         )
                         statusRow(

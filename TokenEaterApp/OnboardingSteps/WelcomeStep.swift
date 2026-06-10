@@ -4,7 +4,7 @@ struct WelcomeStep: View {
     @ObservedObject var viewModel: OnboardingViewModel
 
     private let demoValues: [(String, Int, Color)] = [
-        ("5h", 35, Color(hex: "#22C55E")),
+        ("5h", 35, Color(hex: "#D97706")),
         ("7d", 52, Color(hex: "#FF9F0A")),
         ("Sonnet", 12, Color(hex: "#3B82F6")),
     ]

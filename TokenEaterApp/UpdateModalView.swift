@@ -179,21 +179,21 @@ struct UpdateModalView: View {
             // Success checkmark
             ZStack {
                 Circle()
-                    .fill(Color.green.opacity(0.08))
+                    .fill(Color(hex: "#D97706").opacity(0.08))
                     .frame(width: 100, height: 100)
                     .blur(radius: 20)
 
                 ZStack {
                     Circle()
-                        .fill(Color.green.opacity(0.15))
+                        .fill(Color(hex: "#D97706").opacity(0.15))
                         .frame(width: 72, height: 72)
                     Circle()
-                        .stroke(Color.green.opacity(0.3), lineWidth: 2)
+                        .stroke(Color(hex: "#D97706").opacity(0.3), lineWidth: 2)
                         .frame(width: 72, height: 72)
                     Image(systemName: "checkmark")
                         .font(.system(size: 28, weight: .bold))
-                        .foregroundStyle(.green)
-                        .shadow(color: .green.opacity(0.5), radius: 4)
+                        .foregroundStyle(Color(hex: "#D97706"))
+                        .shadow(color: Color(hex: "#D97706").opacity(0.5), radius: 4)
                 }
                 .scaleEffect(checkmarkScale)
             }

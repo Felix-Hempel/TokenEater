@@ -86,7 +86,7 @@ struct ConnectionStep: View {
         VStack(spacing: 20) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
-                .foregroundStyle(.green)
+                .foregroundStyle(Color(hex: "#D97706"))
 
             GlowText(
                 String(localized: "onboarding.connection.success.title"),
@@ -111,7 +111,7 @@ struct ConnectionStep: View {
 
     private func realDataPreview(usage: UsageResponse) -> some View {
         let values: [(String, Int, Color)] = [
-            ("5h", Int(usage.fiveHour?.utilization ?? 0), Color(hex: "#22C55E")),
+            ("5h", Int(usage.fiveHour?.utilization ?? 0), Color(hex: "#D97706")),
             ("7d", Int(usage.sevenDay?.utilization ?? 0), Color(hex: "#FF9F0A")),
             ("Sonnet", Int(usage.sevenDaySonnet?.utilization ?? 0), Color(hex: "#3B82F6")),
         ]
@@ -153,7 +153,7 @@ struct ConnectionStep: View {
         VStack(spacing: 16) {
             Image(systemName: "checkmark.circle.fill")
                 .font(.system(size: 48))
-                .foregroundStyle(.green)
+                .foregroundStyle(Color(hex: "#D97706"))
 
             GlowText(
                 String(localized: "onboarding.connection.success.title"),

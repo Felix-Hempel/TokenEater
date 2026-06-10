@@ -17,16 +17,16 @@ struct PacingDisplayPicker: View {
                 } label: {
                     Text(item.preview)
                         .font(.system(size: 11, weight: .bold, design: .monospaced))
-                        .foregroundStyle(selection == item.mode ? Color.green : .secondary)
+                        .foregroundStyle(selection == item.mode ? Color(hex: "#D97706") : .secondary)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(selection == item.mode ? Color.green.opacity(0.12) : Color.clear)
+                                .fill(selection == item.mode ? Color(hex: "#D97706").opacity(0.12) : Color.clear)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 6)
-                                .stroke(selection == item.mode ? Color.green.opacity(0.3) : Color.secondary.opacity(0.2), lineWidth: 1)
+                                .stroke(selection == item.mode ? Color(hex: "#D97706").opacity(0.3) : Color.secondary.opacity(0.2), lineWidth: 1)
                         )
                         .contentShape(Rectangle())
                 }

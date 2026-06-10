@@ -88,7 +88,7 @@ struct NotificationStep: View {
                         .font(.system(size: 15, weight: .medium))
                 } icon: {
                     Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(.green)
+                        .foregroundStyle(Color(hex: "#D97706"))
                 }
                 .foregroundStyle(.white)
                 darkButton("onboarding.notif.test") { viewModel.sendTestNotification() }

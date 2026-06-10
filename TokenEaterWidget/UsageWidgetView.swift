@@ -213,7 +213,7 @@ struct UsageWidgetView: View {
                 } else {
                     HStack(spacing: 3) {
                         Circle()
-                            .fill(.green.opacity(0.6))
+                            .fill(Color(hex: "#D97706").opacity(0.6))
                             .frame(width: 4, height: 4)
                         Text(String(localized: "widget.refresh.interval"))
                             .font(.system(size: 9, design: .rounded))

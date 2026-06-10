@@ -15,10 +15,10 @@ struct ThemeColors: Codable, Equatable {
     // MARK: Presets
 
     static let `default` = ThemeColors(
-        gaugeNormal: "#22C55E",
+        gaugeNormal: "#D97706",
         gaugeWarning: "#F97316",
         gaugeCritical: "#EF4444",
-        pacingChill: "#32D74B",
+        pacingChill: "#F59E0B",
         pacingOnTrack: "#0A84FF",
         pacingHot: "#FF453A",
         widgetBackground: "#000000",
@@ -37,10 +37,10 @@ struct ThemeColors: Codable, Equatable {
     )
 
     static let neon = ThemeColors(
-        gaugeNormal: "#00FF87",
+        gaugeNormal: "#FF8800",
         gaugeWarning: "#FFD000",
         gaugeCritical: "#FF006E",
-        pacingChill: "#00FF87",
+        pacingChill: "#FF8800",
         pacingOnTrack: "#00D4FF",
         pacingHot: "#FF006E",
         widgetBackground: "#0A0A0A",
@@ -48,10 +48,10 @@ struct ThemeColors: Codable, Equatable {
     )
 
     static let pastel = ThemeColors(
-        gaugeNormal: "#86EFAC",
+        gaugeNormal: "#FCD34D",
         gaugeWarning: "#FDE68A",
         gaugeCritical: "#FCA5A5",
-        pacingChill: "#86EFAC",
+        pacingChill: "#FCD34D",
         pacingOnTrack: "#93C5FD",
         pacingHot: "#FCA5A5",
         widgetBackground: "#1A1A2E",

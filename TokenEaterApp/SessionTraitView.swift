@@ -43,7 +43,7 @@ struct SessionTraitView: View {
     private var stateColor: Color {
         if isDetailed {
             switch session.state {
-            case .idle: return Color(red: 0.3, green: 0.78, blue: 0.52)
+            case .idle: return Color(red: 0.85, green: 0.47, blue: 0.02)
             case .thinking: return Color(red: 0.95, green: 0.62, blue: 0.22)
             case .toolExec: return Color(red: 0.38, green: 0.58, blue: 0.95)
             case .waiting: return Color(red: 0.7, green: 0.45, blue: 0.95)
@@ -52,7 +52,7 @@ struct SessionTraitView: View {
             }
         } else {
             switch session.state {
-            case .idle, .waiting: return Color(red: 0.3, green: 0.78, blue: 0.52)
+            case .idle, .waiting: return Color(red: 0.85, green: 0.47, blue: 0.02)
             case .thinking, .toolExec, .subagent, .compacting: return Color(red: 0.95, green: 0.62, blue: 0.22)
             }
         }
@@ -62,7 +62,7 @@ struct SessionTraitView: View {
     private var neonColor: Color {
         if isDetailed {
             switch session.state {
-            case .idle: return Color(red: 0.2, green: 1.0, blue: 0.55)
+            case .idle: return Color(red: 1.0, green: 0.53, blue: 0.0)
             case .thinking: return Color(red: 1.0, green: 0.55, blue: 0.1)
             case .toolExec: return Color(red: 0.3, green: 0.5, blue: 1.0)
             case .waiting: return Color(red: 0.8, green: 0.35, blue: 1.0)
@@ -71,7 +71,7 @@ struct SessionTraitView: View {
             }
         } else {
             switch session.state {
-            case .idle, .waiting: return Color(red: 0.2, green: 1.0, blue: 0.55)
+            case .idle, .waiting: return Color(red: 1.0, green: 0.53, blue: 0.0)
             case .thinking, .toolExec, .subagent, .compacting: return Color(red: 1.0, green: 0.55, blue: 0.1)
             }
         }
